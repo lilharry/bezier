@@ -38,7 +38,7 @@ The file follows the following format:
 
 See the file script for an example of the file format
 """
-ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save' ]
+ARG_COMMANDS = [ 'line', 'scale', 'move', 'rotate', 'save', 'circle', 'hermite','bezier' ]
 
 def parse_file( fname, edges, transform, screen, color ):
 
@@ -98,4 +98,23 @@ def parse_file( fname, edges, transform, screen, color ):
             else:
                 save_extension(screen, args[0])
             
+        
+        elif line == "circle":
+            add_circle( edges,
+                      float(args[0]), float(args[1]), float(args[2]),
+                        float(args[3]),0.01)
+            
+        elif line == "hermite":
+            print args
+            add_curve( edges,
+                      float(args[0]), float(args[1]), float(args[2]),
+                        float(args[3]), float(args[4]), float(args[5]),
+                       float(args[6]), float(args[7]), 0.01, "hermite")
+        elif line == "bezier":
+            break
+            add_curve( edges,
+                      float(args[0]), float(args[1]), float(args[2]),
+                        float(args[3]), float(args[4]), float(args[5]),
+                       float(args[6]), float(args[7]), 0.01, "hermite")
+
         c+= 1
