@@ -26,15 +26,24 @@ def add_circle( points, cx, cy, cz, r, step ):
 
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
     if curve_type == "hermite":
-        h = make_bezier()
+h = new_matrix()
+h[0][0] = 2
+h[0][1] = -3
+h[0][3] = 1
+h[1][0] = -2
+h[1][1] = 3
+h[2][0] = 1
+h[2][1] = -2
+h[2][2] = 1
+h[3][0] = 1
+h[3][1] = -1
         
         t = 0
         while (t < 1.1):
             T = [[t*t*t],
-                 [ t*t],
+                 [t*t],
                  [t],
                  [1]]
-            
             C = [[x0,y0,x2,y2],[x1,y1,x3,y3]]
             print_matrix(T)
             print_matrix(h)
