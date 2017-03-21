@@ -8,7 +8,7 @@ def add_circle( points, cx, cy, cz, r, step ):
     y0 = r * math.sin(2 * math.pi * t) + cy
     z0 = cz
         
-    while (t<1.1):
+    while (t<1.01):
         
         x1 = r * math.cos(2 * math.pi * t) + cx
         y1 = r * math.sin(2 * math.pi * t) + cy
@@ -25,36 +25,19 @@ def add_circle( points, cx, cy, cz, r, step ):
         
 
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-    if curve_type == "hermite":
-h = new_matrix()
-h[0][0] = 2
-h[0][1] = -3
-h[0][3] = 1
-h[1][0] = -2
-h[1][1] = 3
-h[2][0] = 1
-h[2][1] = -2
-h[2][2] = 1
-h[3][0] = 1
-h[3][1] = -1
-        
-        t = 0
-        while (t < 1.1):
-            T = [[t*t*t],
-                 [t*t],
-                 [t],
-                 [1]]
-            C = [[x0,y0,x2,y2],[x1,y1,x3,y3]]
-            print_matrix(T)
-            print_matrix(h)
-            matrix_mult(T,h)
-            matrix_mult(h,C)
-            print C
-            t += step
-    pass
+    xcoefs = generate_curve_coefs(x0,x1,x2,x3,curve_type)[0]
+    ycoefs = generate_curve_coefs(y0,y1,y2,y3,curve_type)[0]        
+    t = 0
+    while (t < 1.01):
+        x1 = xcoefs[0]*t*t*t + xcoefs[1]*t*t + xcoefs[2]*t + xcoefs[3]
+        y1 = ycoefs[0]*t*t*t + ycoefs[1]*t*t + ycoefs[2]*t + ycoefs[3]
 
+        add_edge(points,x0,y0,0,x1,y1,0)
+
+        x0 = x1
+        y0 = y1
         
-        
+        t += step
         
     
 
